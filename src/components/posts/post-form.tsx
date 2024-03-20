@@ -1,8 +1,21 @@
-// this is a client component
 "use client";
 
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useFormState } from "react-dom";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 // Define the shape of the form errors
 interface FormErrors {
@@ -15,6 +28,14 @@ interface FormState {
   errors: FormErrors;
 }
 
+const formSchema = z.object({
+  title: z.string().min(10, {
+    message: "Title must be at least 10 characters.",
+  }),
+  content: z.string().min(20, {
+    message: "Content must be at least 20 characters.",
+  }),
+});
 // Define the props that the PostForm component expects
 interface PostFormProps {
   formAction: any; // The action to perform when the form is submitted
@@ -24,68 +45,72 @@ interface PostFormProps {
     content: string;
   };
 }
-
-// The formAction is the action to perform when the form is submitted. We use it as a props because
-// we will use this for create and edit page which both page doesn't have the same action
-// The initialData is the initial data for the form fields.
 export default function PostForm({ formAction, initialData }: PostFormProps) {
-  // Initialize the form state and action
   const [formState, action] = useFormState<FormState>(formAction, {
     errors: {},
   });
 
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: initialData.title,
+      content: initialData.content,
+    },
+  });
+
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+  }
   return (
     <>
       <h1 className="text-3xl font-bold mb-6">
         {initialData.title ? "Update" : "Create"} Post
       </h1>
-      <form action={action}>
-        <div className="w-96">
-          <div className="mb-4">
-            <label htmlFor="title" className="block mb-2">
-              Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              defaultValue={initialData.title}
-              className="rounded p-2 w-full"
-            />
-            {formState.errors.title && (
-              <div className="text-red-500">
-                {formState.errors.title?.join(", ")} // Display form errors
-                related to the title field
-              </div>
+      <Form {...form}>
+        <form action={action} className="space-y-8">
+          <FormDescription>
+            Provide Title and Content of the post.
+          </FormDescription>
+          <FormField
+            control={form.control}
+            name="title"
+            defaultValue={initialData.title}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Title" {...field} />
+                </FormControl>
+                <FormDescription>Title of the post.</FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="content" className="block mb-2">
-              Content
-            </label>
-            <textarea
-              id="content"
-              name="content"
-              defaultValue={initialData.content}
-              className="rounded p-2 w-full"
-            ></textarea>
-            {formState.errors.content && (
-              <div className="text-red-500">
-                {formState.errors.content?.join(", ")} // Display form errors
-                related to the content field
-              </div>
+          />
+          <FormField
+            control={form.control}
+            name="content"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Content</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Content"
+                    className="resize-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>Content of the post</FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
-          </div>
-          <div className="mb-4">
-            <button type="submit" className="bg-white px-4 py-2 rounded mr-2">
-              Save
-            </button>
-            <Link href="/" className="bg-transparent px-4 py-2 rounded">
-              Cancel
-            </Link>
-          </div>
-        </div>
-      </form>
+          />
+          <Button type="submit">Submit</Button>
+        </form>
+      </Form>
     </>
   );
 }

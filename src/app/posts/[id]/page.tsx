@@ -25,8 +25,8 @@ export default async function PostsEdit({ params }: PostsEditProps) {
   return (
     <main className="flex min-h-screen flex-col items-start p-24">
       <div className="mb-32 text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        // renders a PostForm component, passing the updateAction as the form
-        action and the post data // as the initial data
+        {/*renders a PostForm component, passing the updateAction as the form
+        action and the post data // as the initial data */}
         <PostForm
           formAction={updateAction}
           initialData={{
