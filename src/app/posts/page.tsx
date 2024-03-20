@@ -1,4 +1,9 @@
+import AppLayout from "@/components/layouts/applayout";
 import PostList from "@/components/posts/postlist";
 export default function PostsPage() {
-  return <PostList />;
+  return (
+    <AppLayout>
+      <PostList />
+    </AppLayout>
+  );
 }

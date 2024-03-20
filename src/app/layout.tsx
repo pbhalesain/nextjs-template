@@ -1,12 +1,12 @@
-import "@/style/globals.css";
-import { Metadata } from "next";
-
 import { SiteHeader } from "@/components/site-header";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteContent } from "@/config/site-content";
 import { fontSans } from "@/style/fonts";
+import "@/style/globals.css";
 import { cn } from "@/util";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
@@ -41,11 +41,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1">{children}</div>
-            </div>
-            <TailwindIndicator />
+            <TooltipProvider delayDuration={100}>
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <div className="flex-1">{children}</div>
+              </div>
+              <TailwindIndicator />
+            </TooltipProvider>
           </ThemeProvider>
         </body>
       </html>

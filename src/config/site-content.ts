@@ -1,8 +1,8 @@
 export type SiteContent = typeof siteContent
 
 export const siteContent = {
-  name: "Next.js",
-  description: "Beautifully designed components built with Radix UI and Tailwind CSS.",
+  name: "NextJs Kickstart",
+  description: "A boilerplate template for AI Assistant SASS product.",
   mainNav: [
     {
       title: "Home",
@@ -10,8 +10,8 @@ export const siteContent = {
     },
   ],
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn/ui",
-    docs: "https://ui.shadcn.com",
+    twitter: "https://twitter.com/setient",
+    github: "https://github.com/pbhalesain/nextjs-template",
+    docs: "https://setient.com",
   },
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
@@ -13,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -108,7 +110,16 @@ export default function PostForm({ formAction, initialData }: PostFormProps) {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button className="px-5 " type="submit">
+            Submit
+          </Button>
+          <span></span>
+          <Link
+            href="/posts"
+            className={buttonVariants({ variant: "outline" })}
+          >
+            Cancel
+          </Link>
         </form>
       </Form>
     </>

@@ -83,8 +83,8 @@ export async function createPost(
     }
 
     // Revalidate the path and redirect to the home page
-    revalidatePath('/')
-    redirect('/')
+    revalidatePath('/posts')
+    redirect('/posts')
 }
 
 export async function updatePost(
@@ -129,8 +129,8 @@ export async function updatePost(
         }
     }
 
-    revalidatePath('/')
-    redirect('/')
+    revalidatePath('/posts')
+    redirect('/posts')
 }
 
 export async function deletePost(
@@ -158,6 +158,6 @@ export async function deletePost(
         }
     }
 
-    revalidatePath('/')
-    redirect('/')
+    revalidatePath('/posts')
+    redirect('/posts')
 }
